@@ -2,7 +2,7 @@
     <div class="card mb-3 text-light">
         <div class="card-body">
             <h5 class="card-title">CPU Usage</h5>
-            <h1 id="cpu"></h1>
+            <h2 id="loadavg"></h2>
         </div>
     </div>
 </template>
@@ -24,7 +24,7 @@ export default {
             }
         },
         renderValue(data) {
-            document.getElementById('cpu').innerText = data.usage.toFixed(2) + '%';
+            document.getElementById('loadavg').innerText = "Load AVG: " + data.load1.toFixed(2) + " " + data.load5.toFixed(2) + " " + data.load15.toFixed(2);
         },
         updateTimer() {
             setInterval(() => {

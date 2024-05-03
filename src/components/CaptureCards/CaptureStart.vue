@@ -5,7 +5,7 @@
       <div class="row row-sm2">
         <select class="col form-dropdown" v-model="selectedInterface" id="interface">
           <option v-for="iface in interfaces" :key="iface" :value="iface"
-            :disabled="iface.mode !== 'up' && iface.mode !== 'recon'">
+            :disabled="iface.mode !== 'up' && iface.mode !== 'capture'">
             {{ iface.name }}
           </option>
         </select>
@@ -14,15 +14,15 @@
       <SwitchButton @switchStateChanged="handleSwitchChanged" label="DeAuth" />
       <br />
       <div class="row row-sm2">
-        <button @click="sendStart" :hidden="!selectedInterface || selectedInterface.mode == 'capture'"
+        <button @click="sendStart" v-show="selectedInterface && selectedInterface.mode != 'capture'"
           class="btn btn-primary">
-          Start Recon
+          Start
         </button>
       </div>
       <div class="row row-sm2">
-        <button @click="sendStop" :hidden="!selectedInterface || selectedInterface.mode != 'capture'"
+        <button @click="sendStop" v-show="selectedInterface && selectedInterface.mode == 'capture'"
           class="btn btn-danger">
-          Stop Recon
+          Stop
         </button>
       </div>
     </div>

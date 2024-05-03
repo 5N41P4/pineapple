@@ -14,15 +14,15 @@
       <SwitchButton @switchStateChanged="handleSwitchChanged" label="DeAuth" />
       <br />
       <div class="row row-sm2">
-        <button @click="sendStart" :hidden="!selectedInterface || selectedInterface.mode == 'recon'"
+        <button id="start" @click="sendStart" v-show="selectedInterface && selectedInterface.mode != 'recon'"
           class="btn btn-primary">
-          Start Recon
+          Start
         </button>
       </div>
       <div class="row row-sm2">
-        <button @click="sendStop" :hidden="!selectedInterface || selectedInterface.mode != 'recon'"
+        <button id="stop" @click="sendStop" v-show="selectedInterface && selectedInterface.mode == 'recon'"
           class="btn btn-danger">
-          Stop Recon
+          Stop
         </button>
       </div>
     </div>
@@ -46,7 +46,7 @@ export default {
             try {
               const response = await fetch("/api/interfaces");
               const data = await response.json();
-//      this.interfaces = [ { name: "wlan0", mode: "inet" }, { name: "wlan1", mode: "up" }, { name: "wlan2", mode: "recon" },];
+    //  this.interfaces = [ { name: "wlan0", mode: "inet" }, { name: "wlan1", mode: "up" }, { name: "wlan2", mode: "recon" },];
               this.interfaces = data;
            } catch (error) {
               console.error("Error fetching interfaces:", error);
