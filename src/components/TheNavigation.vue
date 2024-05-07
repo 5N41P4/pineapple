@@ -6,16 +6,6 @@
             >
         </div>
         <div class="btn">
-            <router-link to="/recon" class="text-light text-decoration-none"
-                >Recon</router-link
-            >
-        </div>
-        <div class="btn">
-            <router-link to="/capture" class="text-light text-decoration-none"
-                >Capture</router-link
-            >
-        </div>
-        <div class="btn">
             <router-link to="/filter" class="text-light text-decoration-none"
                 >Filter</router-link
             >

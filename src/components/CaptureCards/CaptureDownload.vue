@@ -1,7 +1,7 @@
 <template>
   <div class="card text-light">
     <div class="card-body">
-      <h5 class="card-title">Captures</h5>
+      <h5 class="card-title">Download</h5>
       <div class="row row-sm2">
         <select class="col form-dropdown" v-model="selectedFile" id="file">
           <option v-for="file in files" :key="file" :value="file">
@@ -34,11 +34,11 @@ export default {
       try {
         const response = await fetch("/api/captures");
         const data = await response.json();
-        //      this.interfaces = [ { name: "wlan0", mode: "inet" }, { name: "wlan1", mode: "up" }, { name: "wlan2", mode: "recon" },];
         this.files = data.files;
       } catch (error) {
         console.error("Error fetching files:", error);
       }
+    //      this.interfaces = [ { name: "wlan0", mode: "inet" }, { name: "wlan1", mode: "up" }, { name: "wlan2", mode: "recon" },];
     },
     async downloadFile() {
       const response = await fetch("/captures/" + this.selectedFile);
