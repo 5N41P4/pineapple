@@ -11,13 +11,17 @@
           </option>
         </select>
       </div>
+      <br>
+      <div class="row row-sm2">
+        <input type="text form-input" v-model="selectedMac">
+      </div>
       <br />
       <SwitchButton v-if="isIfFetched && selectedInterface != null" @switchStateChanged="handleSwitchChanged" label="DeAuth" 
           :initialSwitchState="initialSwitchState" />
       <br />
       <div class="row row-sm2">
         <button @click="sendStart" v-show="selectedInterface && selectedInterface.mode != 'capture'"
-          class="btn btn-primary">
+          class="btn btn-primary" :disabled="!isValidMac">
           Start
         </button>
       </div>
@@ -40,6 +44,7 @@ export default {
       selectedInterface: null,
       isIfFetched: false,
       switchState: false,
+      selectedMac: "", 
     };
   },
   created() {
@@ -56,6 +61,10 @@ export default {
   computed: {
     initialSwitchState() {
       return this.selectedInterface?.deauth;
+    },
+    isValidMac() {
+      const macRegex = /^$|^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
+      return macRegex.test(this.selectedMac);
     }
   },
   methods: {
@@ -73,6 +82,7 @@ export default {
       const jsonData = {
         identifier: this.selectedInterface.name,
         action: "capture",
+        target: this.selectedMac,
         deauth: this.switchState,
       };
       fetch("/api/interfaces", {

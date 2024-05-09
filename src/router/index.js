@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Recon from "../views/Recon.vue";
+import Capture from "@/views/Capture.vue"
 import Filters from "../views/Filters.vue";
 
 const router = createRouter({
@@ -7,6 +8,8 @@ const router = createRouter({
   routes: [
     { path: "/", name: Recon, component: Recon },
     { path: "/recon", redirect: "/" },
+
+    { path: "/capture", component: Capture },
 
     { path: "/filter", component: Filters},
     // 404

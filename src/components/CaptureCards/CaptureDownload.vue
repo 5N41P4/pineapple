@@ -41,11 +41,11 @@ export default {
     //      this.interfaces = [ { name: "wlan0", mode: "inet" }, { name: "wlan1", mode: "up" }, { name: "wlan2", mode: "recon" },];
     },
     async downloadFile() {
-      const response = await fetch("/captures/" + this.selectedFile);
+      const response = await fetch("/captures/" + this.selectedFile + "/-01.cap");
       const blob = await response.blob();
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = this.selectedFile;
+      link.download = this.selectedFile + ".cap";
       link.click();
       URL.revokeObjectURL(link.href); // Revoke object URL after download
     },
