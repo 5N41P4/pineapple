@@ -15,6 +15,11 @@
                 >Filter</router-link
             >
         </div>
+        <div class="btn">
+            <router-link to="/maps" class="text-light text-decoration-none"
+                >Map</router-link
+            >
+        </div>
     </header>
 </template>
 

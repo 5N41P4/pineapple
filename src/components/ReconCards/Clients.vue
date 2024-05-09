@@ -36,10 +36,10 @@
 </template>
 
 <script>
-import RefreshButton from "../atomic/RefreshButton.vue"
-import ResetButton from "../atomic/ResetButton.vue"
-import DeleteButton from "../atomic/DeleteButton.vue"
-import AddClButton from "../atomic/AddButton.vue"
+import RefreshButton from "@/components/atomic/RefreshButton.vue"
+import ResetButton from "@/components/atomic/ResetButton.vue"
+import DeleteButton from "@/components/atomic/DeleteButton.vue"
+import AddClButton from "@/components/atomic/AddButton.vue"
 export default {
   data() {
     return {
@@ -70,7 +70,7 @@ export default {
         );
         const data = await response.json();
         //this.clients = [{ "bssid": "00:00:00:00:00:00", "station": "DC:A6:32:51:5E:72" }, { "bssid": "50:E0:39:69:1C:BE", "station": "1C:91:80:D1:D8:BE" }, { "bssid": "50:E0:39:69:1C:BE", "station": "3E:A9:BA:09:11:09" }, { "bssid": "60:AA:EF:61:0F:92", "station": "A8:51:AB:90:32:CB" }];
-        this.clients = data.sort((a, b) => a.station.localeCompare(b.station));
+        this.clients = data
       } catch (error) {
         console.error("Error fetching accesspoints:", error);
       }
