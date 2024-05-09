@@ -15,14 +15,12 @@
       <SwitchButton v-if="isIfFetched && selectedInterface != null" @switchStateChanged="handleSwitchChanged" label="Deauth"
           :initialSwitchState="initialSwitchState" />
       <br />
-      <div class="row row-sm2">
-        <button id="start" @click="sendStart" v-show="selectedInterface && selectedInterface.mode != 'recon'"
+      <div class="d-flex btn-group">
+        <button id="start" @click="sendStart" :disabled="!(selectedInterface && selectedInterface.mode != 'recon')"
           class="btn btn-primary">
           Start
         </button>
-      </div>
-      <div class="row row-sm2">
-        <button id="stop" @click="sendStop" v-show="selectedInterface && selectedInterface.mode == 'recon'"
+        <button id="stop" @click="sendStop" :disabled="!(selectedInterface && selectedInterface.mode == 'recon')"
           class="btn btn-danger">
           Stop
         </button>
@@ -86,6 +84,7 @@ export default {
           this.fetchInterfaces();
       })
         .catch((error) => console.error("Error sending data:", error));
+        location.reload();
     },
     sendStop() {
       const jsonData = {
@@ -104,6 +103,7 @@ export default {
           this.fetchInterfaces();
         })
         .catch((error) => console.error("Error sending data:", error));
+        location.reload()
     },
     handleSwitchChanged(newVal) {
       this.switchState = newVal;

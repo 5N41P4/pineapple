@@ -1,6 +1,5 @@
 <script setup>
 import Navigation from "./components/TheNavigation.vue";
-import Card from "./components/TextCard.vue";
 import Mem from "./components/SystemCards/Mem.vue";
 import Disk from "./components/SystemCards/Disk.vue";
 import Cpu from "./components/SystemCards/Cpu.vue";
@@ -10,15 +9,15 @@ import Cpu from "./components/SystemCards/Cpu.vue";
     <div>
         <Navigation />
         <main class="container">
-            <div id="dash" class="row row-cols-md-3 g-10">
-                <div class="col">
-                    <Disk />
+            <div id="dash" class="row">
+                <div class="col-lg-4 d-flex align-items-stretch">
+                    <Disk class="flex-grow-1" />
                 </div>
-                <div class="col">
-                    <Cpu />
+                <div class="col-lg-4 d-flex align-items-stretch">
+                    <Cpu class="flex-grow-1" />
                 </div>
-                <div class="col">
-                    <Mem />
+                <div class="col-lg-4 d-flex align-items-stretch">
+                    <Mem class="flex-grow-1" />
                 </div>
             </div>
             <hr />

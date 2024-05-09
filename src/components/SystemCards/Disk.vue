@@ -1,5 +1,5 @@
 <template>
-    <div class="card mb-3 text-light">
+    <div class="card text-light">
         <div class="card-body">
             <h5 class="card-title">Disk Usage</h5>
             <h1 id="disk"></h1>

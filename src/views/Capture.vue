@@ -1,19 +1,19 @@
 <template>
   <div id="capture" class="container">
     <div class="row">
-      <div class="col-6">
+      <div class="col-lg-7">
         <CaptureControl />
       </div>
-      <div class="col-6">
+      <div class="col-lg-5">
         <CaptureDownload />
       </div>
     </div>
     <br>
     <div class="row">
-      <div class="col-7">
+      <div class="col-lg-7">
         <AccessPoints />
       </div>
-      <div class="col-5">
+      <div class="col-lg-5">
         <Clients />
       </div>
     </div>

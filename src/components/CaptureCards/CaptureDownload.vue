@@ -1,29 +1,34 @@
 <template>
   <div class="card text-light">
     <div class="card-body">
-      <h5 class="card-title">Download</h5>
-      <div class="row row-sm2">
+      <h5 class="card-title">Files</h5>
+      <div class="row">
         <select class="col form-dropdown" v-model="selectedFile" id="file">
           <option v-for="file in files" :key="file" :value="file">
             {{ file }}
           </option>
         </select>
       </div>
-      <div class="row row-sm2">
+      <br>
+      <div class="d-flex btn-group">
         <button @click="downloadFile" :disabled="!selectedFile" class="btn btn-primary">
           Download
         </button>
+        <DeleteButton :disabled="!selectedFile" :apiEndpoint="getApiEndpoint()" :itemID="getSelectedFile()" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import DeleteButton from "@/components/atomic/DeleteButton.vue";
+
 export default {
   data() {
     return {
       files: [],
       selectedFile: null,
+      apiEndpoint: "/api/captures"
     };
   },
   created() {
@@ -32,7 +37,7 @@ export default {
   methods: {
     async fetchFiles() {
       try {
-        const response = await fetch("/api/captures");
+        const response = await fetch(this.getApiEndpoint());
         const data = await response.json();
         this.files = data.files;
       } catch (error) {
@@ -49,6 +54,15 @@ export default {
       link.click();
       URL.revokeObjectURL(link.href); // Revoke object URL after download
     },
+    getApiEndpoint() {
+      return this.apiEndpoint
+    },
+    getSelectedFile() {
+      return this.selectedFile
+    }
+  },
+  components: {
+    DeleteButton
   }
 };
 </script>
@@ -61,6 +75,5 @@ export default {
 .btn-primary {
   background-color: #36bf8d;
   border-color: #36bf8d;
-  margin-top: 0.5rem;
 }
 </style>

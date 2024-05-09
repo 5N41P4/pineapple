@@ -3,7 +3,10 @@
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center">
         <h5 class="card-title">Accesspoints</h5>
-        <RefreshButton :apiEndpoint="getApiEndpoint()" />
+        <div class="btn-group">
+          <RefreshButton :apiEndpoint="getApiEndpoint()" />
+          <ResetButton :apiEndpoint="getApiEndpoint()" />
+        </div>
       </div>
       <br />
       <table class="table table-sm">
@@ -30,11 +33,6 @@
           </tr>
         </tbody>
       </table>
-      <br />
-      <div class="d-flex justify-content-between">
-        <span />
-        <ResetButton :apiEndpoint="getApiEndpoint()" />
-      </div>
     </div>
   </div>
 </template>
@@ -102,7 +100,6 @@ export default {
 .btn-primary {
   background-color: #36bf8d;
   border-color: #36bf8d;
-  margin-top: 1rem;
 }
 
 .dropdown-cell {

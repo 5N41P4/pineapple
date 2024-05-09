@@ -19,14 +19,12 @@
       <SwitchButton v-if="isIfFetched && selectedInterface != null" @switchStateChanged="handleSwitchChanged" label="DeAuth" 
           :initialSwitchState="initialSwitchState" />
       <br />
-      <div class="row row-sm2">
-        <button @click="sendStart" v-show="selectedInterface && selectedInterface.mode != 'capture'"
-          class="btn btn-primary" :disabled="!isValidMac">
+      <div class="d-flex btn-group">
+        <button @click="sendStart"
+          class="btn btn-primary" :disabled="!isValidMac || !(selectedInterface && selectedInterface.mode != 'capture')">
           Start
         </button>
-      </div>
-      <div class="row row-sm2">
-        <button @click="sendStop" v-show="selectedInterface && selectedInterface.mode == 'capture'"
+        <button @click="sendStop" :disabled="!(selectedInterface && selectedInterface.mode == 'capture')"
           class="btn btn-danger">
           Stop
         </button>
@@ -96,6 +94,7 @@ export default {
           this.fetchInterfaces();
       })
         .catch((error) => console.error("Error sending data:", error));
+        location.reload();
     },
     sendStop() {
       const jsonData = {
@@ -113,6 +112,7 @@ export default {
           this.fetchInterfaces();
         })
         .catch((error) => console.error("Error sending data:", error));
+        location.reload();
     },
     handleSwitchChanged(newVal) {
       console.log(`The switch state has changed to ${newVal}`)

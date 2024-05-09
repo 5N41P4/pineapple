@@ -1,5 +1,5 @@
 <template>
-  <div class="card mb-3 text-light">
+  <div class="card text-light">
     <div class="card-body">
       <h5 class="card-title">Securtiy Overview</h5>
       <div>
@@ -25,7 +25,10 @@ export default {
       try {
         const response = await fetch('/api/security');
         const data = await response.json();
-        this.renderPieChart(data);
+        console.log(data)
+        if (Object.values(data).some(value => value > 0)) {
+          this.renderPieChart(data);
+        }
       } catch (error) {
         console.error(error);
       }

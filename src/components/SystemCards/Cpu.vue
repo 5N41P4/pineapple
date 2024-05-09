@@ -1,8 +1,13 @@
 <template>
-    <div class="card mb-3 text-light">
+    <div class="card text-light">
         <div class="card-body">
-            <h5 class="card-title">CPU Usage</h5>
-            <h2 id="loadavg"></h2>
+            <h5 class="card-title">Load Avg</h5>
+            <div class="row">
+                <h3 id="loadavg1" class="col mx-auto text-center"></h3>
+                <h3 id="loadavg2" class="col mx-auto text-center"></h3>
+                <h3 id="loadavg3" class="col mx-auto text-center"></h3>
+            </div>
+
         </div>
     </div>
 </template>
@@ -24,7 +29,9 @@ export default {
             }
         },
         renderValue(data) {
-            document.getElementById('loadavg').innerText = "Load AVG: " + data.load1.toFixed(2) + " " + data.load5.toFixed(2) + " " + data.load15.toFixed(2);
+            document.getElementById('loadavg1').innerText = data.load1.toFixed(2) 
+            document.getElementById('loadavg2').innerText = data.load5.toFixed(2) 
+            document.getElementById('loadavg3').innerText = data.load15.toFixed(2);
         },
         updateTimer() {
             setInterval(() => {
