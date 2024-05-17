@@ -1,24 +1,19 @@
 <template>
     <header class="d-flex align-items-center py-3">
         <div class="btn">
-            <router-link to="/" class="text-light text-decoration-none"
-                >Recon</router-link
-            >
+            <router-link to="/" class="text-light text-decoration-none">Recon</router-link>
         </div>
         <div class="btn">
-            <router-link to="/capture" class="text-light text-decoration-none"
-                >Capture</router-link
-            >
+            <router-link to="/capture" class="text-light text-decoration-none">Capture</router-link>
         </div>
         <div class="btn">
-            <router-link to="/filter" class="text-light text-decoration-none"
-                >Filter</router-link
-            >
+            <router-link to="/filter" class="text-light text-decoration-none">Filter</router-link>
         </div>
         <div class="btn">
-            <router-link to="/maps" class="text-light text-decoration-none"
-                >Map</router-link
-            >
+            <router-link to="/maps" class="text-light text-decoration-none">Map</router-link>
+        </div>
+        <div class="btn">
+            <router-link to="/scheduler" class="text-light text-decoration-none">Schedule</router-link>
         </div>
     </header>
 </template>
@@ -35,6 +30,7 @@ header {
     /* Ensure header stays above other elements */
     z-index: 10;
 }
+
 router-link {
     margin: 1rem;
 }

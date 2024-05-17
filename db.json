@@ -456,5 +456,34 @@
             "bssid": "(not associated)",
             "probed essids": ""
         }
+    ],
+    "schedules": [
+    {
+        "id":0,
+        "cron": "0 8 * * *",
+        "action": {
+            "action": "capture",
+            "identifier": "wlan1",
+            "deauth": false
+        }
+    },
+    {
+        "id": 1,
+        "cron": "0 0 * * 1",
+        "action": {
+            "action": "capture",
+            "identifier": "wlan1",
+            "deauth": true
+        }
+    },
+    {
+        "id": 2,
+        "cron": "0 12 * * *",
+        "action": {
+            "action": "capture",
+            "identifier": "wlan2",
+            "deauth": false
+        }
+    }
     ]
 }

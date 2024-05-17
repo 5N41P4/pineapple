@@ -1,8 +1,8 @@
 <script setup>
-import Navigation from "./components/TheNavigation.vue";
-import Mem from "./components/SystemCards/Mem.vue";
-import Disk from "./components/SystemCards/Disk.vue";
-import Cpu from "./components/SystemCards/Cpu.vue";
+import Navigation from "@/components/TheNavigation.vue";
+import Mem from "@/components/SystemCards/Mem.vue";
+import Disk from "@/components/SystemCards/Disk.vue";
+import Cpu from "@/components/SystemCards/Cpu.vue";
 </script>
 
 <template>
