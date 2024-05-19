@@ -25,8 +25,6 @@ import ReconControl from "@/components/ReconCards/ReconStart.vue"
 import AccessPoints from "@/components/ReconCards/AccessPoints.vue"
 import Clients from "@/components/ReconCards/Clients.vue"
 import SecChart from "@/components/ReconCards/SecChart.vue"
-import CaptureControl from "@/components/CaptureCards/CaptureStart.vue"
-import CaptureDownload from "@/components/CaptureCards/CaptureDownload.vue"
 
 export default {
   components: {
@@ -34,8 +32,6 @@ export default {
     AccessPoints,
     Clients,
     SecChart,
-    CaptureControl,
-    CaptureDownload,
   },
 };
 </script>
