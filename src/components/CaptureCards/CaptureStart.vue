@@ -18,6 +18,7 @@
       <br />
       <SwitchButton v-if="isIfFetched && selectedInterface != null" @switchStateChanged="handleSwitchChanged" label="DeAuth" 
           :initialSwitchState="initialSwitchState" />
+      <input type="number" class="form-input" v-model="time" placeholder="Time in minutes" />
       <br />
       <div class="d-flex btn-group">
         <button @click="sendStart"
@@ -40,6 +41,7 @@ export default {
     return {
       interfaces: [],
       selectedInterface: null,
+      time: null,
       isIfFetched: false,
       switchState: false,
       selectedMac: "", 
@@ -80,6 +82,7 @@ export default {
       const jsonData = {
         identifier: this.selectedInterface.name,
         action: "capture",
+        time: this.time < 0 ? 0 : this.time,
         target: this.selectedMac,
         deauth: this.switchState,
       };

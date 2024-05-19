@@ -20,6 +20,8 @@
             <br />
             <input type="text form-input" v-model="target" placeholder="Target" />
             <br />
+            <input type="number form-input" v-model="time" placeholder="Time in minutes">
+            <br />
             <SwitchButton @switchStateChanged="switchState = !switchState" :initialSwitchState="false" label="DeAuth" />
             <br />
 
@@ -48,6 +50,7 @@
 
 <script>
 import SwitchButton from "@/components/atomic/SwitchButton.vue";
+import { select } from "d3";
 
 export default {
     data() {
@@ -58,6 +61,7 @@ export default {
             target: '',
             switchState: false,
             interfaces: [],
+            time: null,
             hours: Array.from({ length: 24 }, (_, i) => i), // Array of hours from 0 to 23
             days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], // Array of days
             selectedHours: [],
@@ -101,7 +105,7 @@ export default {
         generateCronString() {
             const selectedIndexes = this.selectedDays.map(day => this.days.indexOf(day));
             const hours = this.selectedHours.length > 0 ? this.selectedHours.join(',') : '*';
-            const days = selectedIndexes.length > 0 ? this.selectedDays.join(',') : '*';
+            const days = selectedIndexes.length > 0 ? selectedIndexes.join(',') : '*';
             this.cronString = `0 ${hours} * * ${days}`;
         },
         sendJob() {
@@ -111,6 +115,7 @@ export default {
                 action: {
                     identifier: this.selectedInterface.name,
                     action: this.action,
+                    time: this.time,
                     target: "",
                     deauth: this.switchState,
                 },

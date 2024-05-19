@@ -37,7 +37,7 @@ export default {
         return {
             schedules: [],
             activeDropdown: null,
-            apiPath: 'http://localhost:3000/schedules',
+            apiPath: '/api/schedule',
         };
     },
     async created() {

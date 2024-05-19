@@ -12,8 +12,10 @@
         </select>
       </div>
       <br />
-      <SwitchButton v-if="isIfFetched && selectedInterface != null" @switchStateChanged="handleSwitchChanged" label="Deauth"
-          :initialSwitchState="initialSwitchState" />
+      <SwitchButton v-if="isIfFetched && selectedInterface != null" @switchStateChanged="handleSwitchChanged"
+        label="Deauth" :initialSwitchState="initialSwitchState" />
+      <input type="number" class="form-input" v-model="time" placeholder="Time in minutes" />
+      <br />
       <br />
       <div class="d-flex btn-group">
         <button id="start" @click="sendStart" :disabled="!(selectedInterface && selectedInterface.mode != 'recon')"
@@ -36,6 +38,7 @@ export default {
     return {
       interfaces: [],
       selectedInterface: null,
+      time: null,
       isIfFetched: false,
       switchState: false,
     };
@@ -54,23 +57,24 @@ export default {
   watch: {
     selectedInterface() {
       this.switchState = this.selectedInterface?.deauth === 'true' ? true : false;
-    } 
+    }
   },
   methods: {
     async fetchInterfaces() {
-            try {
-              const response = await fetch("/api/interfaces");
-              const data = await response.json();
-              this.interfaces = data;
-           } catch (error) {
-              console.error("Error fetching interfaces:", error);
-            }
-        // this.interfaces = [ { name: "wlan0", mode: "inet", deauth: "false" }, { name: "wlan1", mode: "up" , deauth: "false"}, { name: "wlan2", mode: "recon", deauth: "true" },];
+      try {
+        const response = await fetch("/api/interfaces");
+        const data = await response.json();
+        this.interfaces = data;
+      } catch (error) {
+        console.error("Error fetching interfaces:", error);
+      }
+      // this.interfaces = [ { name: "wlan0", mode: "inet", deauth: "false" }, { name: "wlan1", mode: "up" , deauth: "false"}, { name: "wlan2", mode: "recon", deauth: "true" },];
     },
     sendStart() {
       const jsonData = {
         identifier: this.selectedInterface.name,
         action: "recon",
+        time: this.time < 0 ? 0 : this.time,
         deauth: this.switchState,
       };
       fetch("/api/interfaces", {
@@ -82,9 +86,10 @@ export default {
         .then((data) => {
           console.log("Data sent successfully:", data)
           this.fetchInterfaces();
-      })
+        })
         .catch((error) => console.error("Error sending data:", error));
-        location.reload();
+      // console.log(jsonData)
+      location.reload();
     },
     sendStop() {
       const jsonData = {
@@ -103,7 +108,7 @@ export default {
           this.fetchInterfaces();
         })
         .catch((error) => console.error("Error sending data:", error));
-        location.reload()
+      location.reload()
     },
     handleSwitchChanged(newVal) {
       this.switchState = newVal;
