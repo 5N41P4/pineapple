@@ -20,7 +20,7 @@
                             <button type="button" class="btn btn-light btn-sm"
                                 @click="toggleDropdown(schedule.id)">...</button>
                             <div v-if="activeDropdown === schedule.id" class="custom-dropdown-menu">
-                                <DeleteButton :apiEndpoint="getApiEndpoint" :itemID="schedule.id" />
+                                <DeleteButton @click="sendDeleteRequest(schedule.id)"/>
                             </div>
                         </td>
                     </tr>
@@ -32,6 +32,7 @@
 
 <script>
 import DeleteButton from "@/components/atomic/DeleteButton.vue";
+
 export default {
     data() {
         return {
@@ -61,9 +62,11 @@ export default {
                     this.schedules = data;
                 });
         },
-        toggleDropdown(id) {
-            this.activeDropdown = this.activeDropdown === id ? null : id;
-        },
+        sendDeleteRequest(id) {
+            fetch(`${this.apiPath}/${id}`, {
+                method: "DELETE",
+            });
+        }
     },
     components: {
         DeleteButton,

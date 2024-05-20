@@ -50,7 +50,6 @@
 
 <script>
 import SwitchButton from "@/components/atomic/SwitchButton.vue";
-import { select } from "d3";
 
 export default {
     data() {
@@ -115,8 +114,8 @@ export default {
                 action: {
                     identifier: this.selectedInterface.name,
                     action: this.action,
-                    time: this.time,
-                    target: "",
+                    time: this.time !== null && Number.isInteger(this.time) ? this.time : (this.time !== null ? parseInt(this.time) : 0),
+                    target: this.target,
                     deauth: this.switchState,
                 },
             };
