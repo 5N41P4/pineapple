@@ -11,7 +11,6 @@ export default {
   methods: {
     refreshList() {
       const jsonData = {
-        identifier: "",
         action: "refresh",
       };
       fetch(this.apiEndpoint, {

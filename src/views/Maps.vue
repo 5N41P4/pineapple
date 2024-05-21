@@ -1,5 +1,5 @@
 <template>
-    <ForceCard title="Map" />
+    <ForceCard title="Map" loadData="accesspointsAndClients" />
 </template>
 
 <script>

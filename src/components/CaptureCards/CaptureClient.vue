@@ -13,8 +13,8 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody v-if="clients.length > 0">
-                    <tr v-for="cl in clients" :key="cl.station">
+                <tbody v-if="capture.clients.length > 0">
+                    <tr v-for="cl in capture.clients" :key="cl.station">
                         <td>{{ cl.bssid }}</td>
                         <td>{{ cl.station }}</td>
                         <td class="dropdown-cell">
@@ -32,19 +32,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 import AddClButton from "@/components/atomic/AddButton.vue"
 export default {
-    props: {
-        clients: {
-            type: Array,
-            required: true
-        }
-    },
     data() {
         return {
             activeDropdown: null,
             filterEndpoint: "/api/filter/clients"
         };
+    },
+    computed: {
+        ...mapState(["capture"])
     },
     methods: {
         getFilterEndpoint() {

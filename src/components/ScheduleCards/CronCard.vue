@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import SwitchButton from "@/components/atomic/SwitchButton.vue";
 
 export default {
@@ -59,7 +60,6 @@ export default {
             action: '',
             target: '',
             switchState: false,
-            interfaces: [],
             time: null,
             hours: Array.from({ length: 24 }, (_, i) => i), // Array of hours from 0 to 23
             days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], // Array of days
@@ -68,7 +68,7 @@ export default {
         };
     },
     created() {
-        this.fetchInterfaces();
+        this.$store.dispatch("fetchInterfaces");
     },
     watch: {
         selectedHours: {
@@ -85,22 +85,13 @@ export default {
         },
     },
     computed: {
+        ...mapState(["interfaces"]),
         isValidMac() {
             const macRegex = /^$|^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
             return macRegex.test(this.target);
         }
     },
     methods: {
-        async fetchInterfaces() {
-            try {
-              const response = await fetch("/api/interfaces");
-              const data = await response.json();
-              this.interfaces = data;
-            } catch (error) {
-              console.error("Error fetching interfaces:", error);
-            }
-            // this.interfaces = [{ name: "wlan0", mode: "inet", deauth: "false" }, { name: "wlan1", mode: "up", deauth: "false" }, { name: "wlan2", mode: "recon", deauth: "true" }];
-        },
         generateCronString() {
             const selectedIndexes = this.selectedDays.map(day => this.days.indexOf(day));
             const hours = this.selectedHours.length > 0 ? this.selectedHours.join(',') : '*';
@@ -111,11 +102,17 @@ export default {
             const jsonData = {
                 id: 0,
                 cron: this.cronString,
-                action: {
-                    identifier: this.selectedInterface.name,
+                cmd: {
+                    interface: this.selectedInterface.name,
                     action: this.action,
                     time: this.time !== null && Number.isInteger(this.time) ? this.time : (this.time !== null ? parseInt(this.time) : 0),
-                    target: this.target,
+                    target: {
+                        bssid: this.target,
+                        essid: '',
+                        station: '',
+                        channel: '',
+                        cipher: '',
+                    },
                     deauth: this.switchState,
                 },
             };

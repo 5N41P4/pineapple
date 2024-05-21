@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import SwitchButton from "../atomic/SwitchButton.vue"
+import { mapState } from "vuex";
+import SwitchButton from "@/components/atomic/SwitchButton.vue"
 export default {
     data() {
         return {
-            interfaces: [],
             selectedInterface: null,
             time: null,
             isIfFetched: false,
@@ -48,10 +48,10 @@ export default {
         };
     },
     created() {
-        this.fetchInterfaces().then(() => {
+        this.$store.dispatch("fetchInterfaces").then(() => {
             this.selectedInterface = this.interfaces.find(iface => iface.mode === 'capture') || this.interfaces.find(iface => iface.mode === 'up');
             this.isIfFetched = true;
-        });
+        })
     },
     watch: {
         selectedInterface() {
@@ -59,6 +59,7 @@ export default {
         }
     },
     computed: {
+        ...mapState(["interfaces"]),
         initialSwitchState() {
             return this.selectedInterface?.deauth;
         },
@@ -68,25 +69,14 @@ export default {
         }
     },
     methods: {
-        async fetchInterfaces() {
-            try {
-                const response = await fetch("/api/interfaces");
-                const data = await response.json();
-                this.interfaces = data;
-            } catch (error) {
-                console.error("Error fetching interfaces:", error);
-            }
-            // this.interfaces = [ { name: "wlan0", mode: "inet", deauth: "false" }, { name: "wlan1", mode: "up" , deauth: "false"}, { name: "wlan2", mode: "capture", deauth: "true" },];
-        },
         sendStart() {
             const jsonData = {
-                identifier: this.selectedInterface.name,
                 action: "capture",
                 time: this.time < 0 ? 0 : this.time,
                 target: this.selectedMac,
                 deauth: this.switchState,
             };
-            fetch("/api/interfaces", {
+            fetch("/api/interfaces/" + this.selectedInterface.name, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(jsonData),
@@ -104,7 +94,7 @@ export default {
                 identifier: this.selectedInterface.name,
                 action: "stop",
             };
-            fetch("/api/interfaces", {
+            fetch("/api/interfaces/" + this.selectedInterface.name, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(jsonData),

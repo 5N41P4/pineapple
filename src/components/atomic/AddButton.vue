@@ -12,7 +12,7 @@ export default {
   methods: {
     addItem() {
       const jsonData = {
-        identifier: this.itemID,
+        target: this.itemID,
         action: "add",
       };
       fetch(this.apiEndpoint, {

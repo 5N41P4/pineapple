@@ -10,7 +10,6 @@ export default {
   methods: {
     resetList() {
       const jsonData = {
-        identifier: "",
         action: "reset",
       };
       fetch(this.apiEndpoint, {

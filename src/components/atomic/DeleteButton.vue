@@ -11,7 +11,7 @@ export default {
   methods: {
     deleteItem() {
       const jsonData = {
-        identifier: this.itemID,
+        target: this.itemID,
         action: "delete",
       };
       fetch(this.apiEndpoint, {

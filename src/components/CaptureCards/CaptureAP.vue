@@ -14,8 +14,8 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody v-if="accesspoints.length > 0">
-                    <tr v-for="ap in accesspoints" :key="ap.bssid">
+                <tbody v-if="capture.accesspoints.length > 0">
+                    <tr v-for="ap in capture.accesspoints" :key="ap.bssid">
                         <td>{{ ap.essid }}</td>
                         <td>{{ ap.bssid }}</td>
                         <td>{{ ap.privacy }}</td>
@@ -34,19 +34,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 import AddApButton from "@/components/atomic/AddButton.vue"
 export default {
-    props: {
-        accesspoints: {
-            type: Array,
-            required: true
-        }
-    },
     data() {
         return {
             activeDropdown: null,
             filterEndpoint: "/api/filter/aps"
         };
+    },
+    computed: {
+        ...mapState(["capture"])
     },
     methods: {
         toggleDropdown(bssid) {
