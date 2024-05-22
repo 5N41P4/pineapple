@@ -4,6 +4,7 @@ import Capture from "@/views/Capture.vue"
 import Filters from "@/views/Filters.vue";
 import Maps from "@/views/Maps.vue";
 import Scheduler from "@/views/Schedule.vue";
+import Attack from "@/views/Attacks.vue"
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,6 +19,8 @@ const router = createRouter({
     { path: "/maps", component: Maps},
 
     { path: "/scheduler", component: Scheduler},
+
+    { path: "/attack", component: Attack},
     // 404
 
     { path: "/:pathMatch(.*)*", redirect: "/" },

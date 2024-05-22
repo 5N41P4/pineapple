@@ -15,8 +15,12 @@ export default createStore({
   },
   mutations: {
     setTarget(state, payload) {
-      state.target.accessPoint = payload.accessPoint;
-      state.target.client = payload.client;
+      if (payload.accessPoint) {
+        state.target.accessPoint = payload.accessPoint;
+      }
+      if (payload.client) {
+        state.target.client = payload.client;
+      }
     },
     setAccessPoints(state, accessPoints) {
       state.accesspoints = accessPoints;
@@ -51,7 +55,7 @@ export default createStore({
       try {
         const response = await axios.get("/api/accesspoints");
         let data = response.data;
-          // let data = [{"bssid":"A0:B5:49:98:E5:48","first seen at":"2024-05-21 14:01:17","last seen at":"2024-05-21 14:02:16","channel":1,"speed":195,"privacy":"WPA2","cipher":"CCMP","auth":"PSK","power":-67,"beacons":86,"ivs":6,"lan ip":"0.0.0.0","id len":12,"essid":"2Boys1Router","key":""}]
+        // let data = [{"bssid":"A0:B5:49:98:E5:48","first seen at":"2024-05-21 14:01:17","last seen at":"2024-05-21 14:02:16","channel":1,"speed":195,"privacy":"WPA2","cipher":"CCMP","auth":"PSK","power":-67,"beacons":86,"ivs":6,"lan ip":"0.0.0.0","id len":12,"essid":"2Boys1Router","key":""}]
 
         if (Array.isArray(data) && data.length > 0) {
           data = data.sort((a, b) => {
@@ -72,7 +76,7 @@ export default createStore({
       try {
         const response = await axios.get("/api/clients");
         let data = response.data;
-          // let data = [{ "bssid": "00:00:00:00:00:00", "station": "DC:A6:32:51:5E:72", "power": -65 }, { "bssid": "50:E0:39:69:1C:BE", "station": "1C:91:80:D1:D8:BE", "power": -110 }, { "bssid": "50:E0:39:69:1C:BE", "station": "3E:A9:BA:09:11:09", "power":-55 }, { "bssid": "60:AA:EF:61:0F:92", "station": "A8:51:AB:90:32:CB", "power":-1 }]
+        // let data = [{ "bssid": "00:00:00:00:00:00", "station": "DC:A6:32:51:5E:72", "power": -65 }, { "bssid": "50:E0:39:69:1C:BE", "station": "1C:91:80:D1:D8:BE", "power": -110 }, { "bssid": "50:E0:39:69:1C:BE", "station": "3E:A9:BA:09:11:09", "power":-55 }, { "bssid": "60:AA:EF:61:0F:92", "station": "A8:51:AB:90:32:CB", "power":-1 }]
         if (!Array.isArray(data) || data.length <= 0) {
           data = [];
         }

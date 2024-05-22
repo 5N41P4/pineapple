@@ -24,6 +24,7 @@
             <td class="dropdown-cell">
               <button type="button" class="btn btn-light btn-sm" @click="toggleDropdown(cl.station)">...</button>
               <div v-if="activeDropdown === cl.station" class="custom-dropdown-menu">
+                <button type="button" class="btn btn-primary btn-sm" @click="setTargetClient(cl)">Target</button>
                 <AddClButton :apiEndpoint="getFilterEndpoint()" :itemID="cl.station" />
                 <DeleteButton :apiEndpoint="getApiEndpoint()" :itemID="cl.station" />
               </div>
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
+import { mapState, mapMutations } from "vuex"
 import RefreshButton from "@/components/atomic/RefreshButton.vue"
 import ResetButton from "@/components/atomic/ResetButton.vue"
 import DeleteButton from "@/components/atomic/DeleteButton.vue"
@@ -57,8 +58,18 @@ export default {
     this.updateTimer();
   },
   methods: {
+    ...mapMutations(["setTarget"]),
+    setTargetClient(client) {
+      this.setTarget({ client });
+
+      const accessPoint = this.$store.state.accesspoints.find(ap => ap.bssid === client.bssid);
+
+      if (accessPoint) {
+        this.setTarget({ accessPoint });
+      }
+    },
     getFilterEndpoint() {
-      return this.filterEndpointEndpoint;
+      return this.filterEndpoint;
     },
     getApiEndpoint() {
       return this.apiEndpoint;

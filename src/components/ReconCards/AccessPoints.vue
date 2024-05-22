@@ -27,6 +27,8 @@
                             <button type="button" class="btn btn-light btn-sm"
                                 @click="toggleDropdown(ap.bssid)">...</button>
                             <div v-if="activeDropdown === ap.bssid" class="custom-dropdown-menu">
+                                <button type="button" class="btn btn-primary btn-sm"
+                                    @click="setTargetAccesspoint(ap)">Target</button>
                                 <AddApButton :apiEndpoint="getFilterEndpoint()" :itemID="ap.bssid" />
                                 <DeleteButton :apiEndpoint="getApiEndpoint()" :itemID="ap.bssid" />
                             </div>
@@ -39,7 +41,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
+import { mapState, mapMutations } from "vuex"
 import RefreshButton from "@/components/atomic/RefreshButton.vue"
 import DeleteButton from "@/components/atomic/DeleteButton.vue"
 import ResetButton from "@/components/atomic/ResetButton.vue"
@@ -60,6 +62,10 @@ export default {
         this.updateTimer();
     },
     methods: {
+        ...mapMutations(["setTarget"]),
+        setTargetAccesspoint(accessPoint) {
+            this.setTarget({ accessPoint });
+        },
         toggleDropdown(bssid) {
             this.activeDropdown = this.activeDropdown === bssid ? null : bssid;
         },

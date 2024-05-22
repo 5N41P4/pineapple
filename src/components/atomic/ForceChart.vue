@@ -31,7 +31,7 @@ export default {
             // d3.select("#chart").select('svg').remove();
 
             // Specify the dimensions of the chart.
-            const width = 928;
+            const width = 1000;
             const height = 680;
             const apColor = '#96b3a2';
             const clientColor = '#f4a261';
@@ -44,13 +44,10 @@ export default {
             const nodes = JSON.parse(JSON.stringify(this.nodes));
             const links = JSON.parse(JSON.stringify(this.links));
 
-            console.log(nodes);
-            console.log(links);
-
             // Create a simulation with several forces.
             const simulation = d3.forceSimulation(nodes)
-                .force("link", d3.forceLink(links).id(d => d.id))
-                .force("charge", d3.forceManyBody())
+                .force("link", d3.forceLink(links).id(d => d.id).distance(80))
+                .force("charge", d3.forceManyBody().strength(-200))
                 .force("x", d3.forceX())
                 .force("y", d3.forceY());
 
@@ -76,7 +73,7 @@ export default {
                 .selectAll("circle")
                 .data(nodes)
                 .join("circle")
-                .attr("r", d => d.size * 2)
+                .attr("r", d => d.size)
                 .attr("fill", d => {
                     if (d.isMock) {
                         return "#ff0000"; // Color for mock nodes
@@ -84,6 +81,16 @@ export default {
                         return d.group === 'accessPoint' ? apColor : clientColor;
                     }
                 });
+
+            const labels = svg.append("g")
+                .selectAll("text")
+                .data(nodes)
+                .join("text")
+                .text(d => d.title)
+                .style("text-anchor", "middle")
+                .style("fill", "#555")
+                .style("font-family", "Arial")
+                .style("font-size", 12);
 
             node.append("title")
                 .text(d => d.title);
@@ -105,6 +112,10 @@ export default {
                 node
                     .attr("cx", d => d.x)
                     .attr("cy", d => d.y);
+
+                labels
+                    .attr("x", d => d.x)
+                    .attr("y", d => d.y);
             });
 
             // Reheat the simulation when drag starts, and fix the subject position.

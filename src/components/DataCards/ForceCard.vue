@@ -30,11 +30,23 @@ export default {
     },
     methods: {
         ...mapActions(["fetchAccesspoints", "fetchClients", "fetchCapture"]), // Add 'fetchCapture' to the mapped actions
+
+        mapSignalStrengthToSize(signalStrength) {
+            const inputRange = [-120, -20];
+            const outputRange = [10, 30];
+
+            // Map the signal strength to the output range
+            const size = outputRange[0] + ((signalStrength - inputRange[0]) / (inputRange[1] - inputRange[0])) * (outputRange[1] - outputRange[0]);
+
+            // Clamp the size to the output range
+            return Math.max(outputRange[0], Math.min(outputRange[1], size));
+        },
+
         processData(accessPoints, clients) {
             this.nodes = [...accessPoints, ...clients].map(item => ({
                 id: item.station || item.bssid,
                 group: item.station ? 'client' : 'accessPoint',
-                size: 10 + Math.log(100 + item.power > 0 ? 100 + item.power : 1) / 10,
+                size: this.mapSignalStrengthToSize(item.power),
                 title: item.station || item.essid === '' ? item.bssid : item.essid,
                 isMock: false // Add a new property to indicate whether the node is a mock node
             }));

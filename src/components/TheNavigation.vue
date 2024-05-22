@@ -15,6 +15,9 @@
         <div class="btn">
             <router-link to="/scheduler" class="text-light text-decoration-none">Schedule</router-link>
         </div>
+        <div class="btn">
+            <router-link to="/attack" class="text-light text-decoration-none">Attacks</router-link>
+        </div>
     </header>
 </template>
 
