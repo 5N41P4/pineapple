@@ -3,26 +3,20 @@
         <div class="card-body">
             <h4 class="card-title">Capture</h4>
             <h5 class="card-title">Interface</h5>
-            <div class="row row-sm2">
-                <select class="col form-dropdown" v-model="selectedInterface" id="interface">
+                <select class="form-dropdown w-50" v-model="selectedInterface" id="interface">
                     <option v-for="iface in interfaces" :key="iface" :value="iface"
                         :disabled="iface.mode !== 'up' && iface.mode !== 'capture'">
                         {{ iface.name }}
                     </option>
                 </select>
-            </div>
-            <br>
-            <div class="row row-sm2">
-                <input type="text form-input" v-model="selectedMac" placeholder="Target MAC [BSSID|Device]">
-            </div>
+            <input type="number" class="form-input w-50" v-model="time" placeholder="Time in minutes" />
             <br />
             <SwitchButton v-if="isIfFetched && selectedInterface != null" @switchStateChanged="handleSwitchChanged"
                 label="DeAuth" :initialSwitchState="initialSwitchState" />
-            <input type="number" class="form-input" v-model="time" placeholder="Time in minutes" />
             <br />
             <div class="d-flex btn-group">
                 <button @click="sendStart" class="btn btn-primary"
-                    :disabled="!isValidMac || !(selectedInterface && selectedInterface.mode != 'capture')">
+                    :disabled="!isValidTarget || !(selectedInterface && selectedInterface.mode != 'capture')">
                     Start
                 </button>
                 <button @click="sendStop" :disabled="!(selectedInterface && selectedInterface.mode == 'capture')"
@@ -44,7 +38,7 @@ export default {
             time: null,
             isIfFetched: false,
             switchState: false,
-            selectedMac: "",
+            validTarget: false,
         };
     },
     created() {
@@ -59,21 +53,23 @@ export default {
         }
     },
     computed: {
-        ...mapState(["interfaces"]),
+        ...mapState(["interfaces", "target"]),
         initialSwitchState() {
             return this.selectedInterface?.deauth;
         },
-        isValidMac() {
-            const macRegex = /^$|^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
-            return macRegex.test(this.selectedMac);
-        }
     },
     methods: {
         sendStart() {
             const jsonData = {
                 action: "capture",
                 time: this.time < 0 ? 0 : this.time,
-                target: this.selectedMac,
+                target: {
+                    bssid: this.target.accessPoint.bssid,
+                    essid: this.target.accessPoint.essid,
+                    station: this.target.client.station,
+                    channel: this.target.accessPoint.channel.toString(),
+                    privacy: this.target.accessPoint.cipher,
+                },
                 deauth: this.switchState,
             };
             fetch("/api/interfaces/" + this.selectedInterface.name, {
@@ -110,6 +106,12 @@ export default {
         handleSwitchChanged(newVal) {
             console.log(`The switch state has changed to ${newVal}`)
         },
+        isValidTarget() {
+            if (!this.target || (this.target.BSSID && this.target.channel)) {
+                return true;
+            }
+            return false;
+        }
     },
     components: {
         SwitchButton,

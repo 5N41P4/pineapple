@@ -26,10 +26,36 @@ export default {
         };
     },
     computed: {
-        ...mapState(["accesspoints", "clients", "capture"]) // Add 'capture' to the mapped state
+        ...mapState(["accesspoints", "clients", "capture"])
+    },
+    watch: {
+        accesspoints: {
+            handler() {
+                if (this.loadData === 'recon') {
+                    this.processData(this.accesspoints, this.clients);
+                }
+            },
+            deep: true
+        },
+        clients: {
+            handler() {
+                if (this.loadData === 'recon') {
+                    this.processData(this.accesspoints, this.clients);
+                }
+            },
+            deep: true
+        },
+        capture: {
+            handler() {
+                if (this.loadData === 'capture') {
+                    this.processData(this.capture.accesspoints, this.capture.clients);
+                }
+            },
+            deep: true
+        }
     },
     methods: {
-        ...mapActions(["fetchAccesspoints", "fetchClients", "fetchCapture"]), // Add 'fetchCapture' to the mapped actions
+        ...mapActions(["fetchAccesspoints", "fetchClients"]),
 
         mapSignalStrengthToSize(signalStrength) {
             const inputRange = [-120, -20];
@@ -113,15 +139,7 @@ export default {
             });
         }
     },
-    async created() {
-        if (this.loadData === 'accesspointsAndClients') {
-            await Promise.all([this.fetchAccesspoints(), this.fetchClients()]);
-            this.processData(this.accesspoints, this.clients);
-        } else if (this.loadData === 'capture') {
-            await this.fetchCapture();
-            this.processData(this.capture.accesspoints, this.capture.clients);
-        }
-    }
+ 
 }
 </script>
 

@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         drawChart: debounce(function () {
-            // d3.select("#chart").select('svg').remove();
+            d3.select("#chart").select('svg').remove();
 
             // Specify the dimensions of the chart.
             const width = 1000;

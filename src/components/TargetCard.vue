@@ -2,21 +2,32 @@
     <div>
         <div class="card text-light">
             <div class="card-header">
-                <h2>Target</h2>
+                <h5>Target</h5>
             </div>
-            <div class="card-body justify-content-between">
-                <label for="accessPoint.essid">ESSID:</label>
-                <input class:="input" v-model="accessPoint.essid" @change="updateTarget('accessPoint', accessPoint)"
-                    placeholder="ESSID" />
-                <label for="accessPoint.bssid">BSSID:</label>
-                <input class:="input" v-model="accessPoint.bssid" @change="updateTarget('accessPoint', accessPoint)"
-                    placeholder="BSSID" />
-                <label for="accessPoint.channel">Channel:</label>
-                <input class:="input" v-model="accessPoint.channel" @change="updateTarget('accessPoint', accessPoint)"
-                    placeholder="Channel" />
-                <label for="client.station">Client MAC:</label>
-                <input class:="input" v-model="client.station" @change="updateTarget('client', client)"
-                    placeholder="Client MAC" />
+            <div class="card-body">
+                <div class="row row-sm2">
+                    <div class="col">
+                        <label for="accessPoint.essid">ESSID:</label>
+                        <input class:="input" v-model="accessPoint.essid"
+                            @change="updateTarget('accessPoint', accessPoint)" placeholder="Example" />
+                        <label for="accessPoint.bssid">BSSID:</label>
+                        <input class:="input" v-model="accessPoint.bssid"
+                            @change="updateTarget('accessPoint', accessPoint)" placeholder="AA:BB:CC:DD:EE:FF" />
+                        <label for="accessPoint.channel">Channel:</label>
+                        <input class:="input" v-model="accessPoint.channel"
+                            @change="updateTarget('accessPoint', accessPoint)" placeholder="[1-16]" />
+                    </div>
+                    <div class="col">
+                        <label for="accessPoint.channel">Privacy:</label>
+                        <input class:="input" v-model="accessPoint.privacy"
+                            @change="updateTarget('accessPoint', accessPoint)" placeholder="[WEP|WPA|WPA2|WPA3]" />
+                        <br />
+                        <span>Client:</span>
+                        <label for="client.station">MAC:</label>
+                        <input class:="input" v-model="client.station" @change="updateTarget('client', client)"
+                            placeholder="FF:EE:DD:CC:BB:AA" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -51,7 +62,14 @@ export default {
         }
     },
     methods: {
+        isValidMac() {
+            const macRegex = /^$|^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
+            return macRegex.test(this.target);
+        },
         updateTarget(key, value) {
+            if ((key === 'BSSID' || key === 'client') && !this.isValidMacAddress(value.station)) {
+                return;
+            }
             this.$store.commit('setTarget', { [key]: value });
         }
     }
@@ -63,10 +81,10 @@ export default {
     background-color: #434D49;
 }
 
-.card-body {
+.card-body .col {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.2rem;
 }
 
 .btn-primary {

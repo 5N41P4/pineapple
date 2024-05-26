@@ -1,5 +1,7 @@
 <template>
     <div id="capture" class="container">
+        <Target />
+        <br>
         <div class="row">
             <div class="col-lg-7">
                 <CaptureControl />
@@ -8,6 +10,8 @@
                 <CaptureDownload @option-selected="fetchOption" />
             </div>
         </div>
+        <br>
+        <Map title="Capture Map" loadData="capture" />
         <br>
         <div class="row">
             <div class="col-lg-7">
@@ -22,10 +26,12 @@
 
 <script>
 import { mapState } from "vuex";
+import Target from "@/components/TargetCard.vue";
 import CaptureControl from "@/components/CaptureCards/CaptureStart.vue"
 import CaptureDownload from "@/components/CaptureCards/CaptureDownload.vue"
 import AccessPoints from "@/components/CaptureCards/CaptureAP.vue";
 import Clients from "@/components/CaptureCards/CaptureClient.vue";
+import Map from "@/components/DataCards/ForceCard.vue"
 
 export default {
     computed: {
@@ -37,6 +43,8 @@ export default {
         },
     },
     components: {
+        Target,
+        Map,
         CaptureControl,
         CaptureDownload,
         AccessPoints,

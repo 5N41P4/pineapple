@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import Recon from "@/views/Recon.vue";
 import Capture from "@/views/Capture.vue"
 import Filters from "@/views/Filters.vue";
-import Maps from "@/views/Maps.vue";
 import Scheduler from "@/views/Schedule.vue";
 import Attack from "@/views/Attacks.vue"
 
@@ -15,8 +14,6 @@ const router = createRouter({
     { path: "/capture", component: Capture },
 
     { path: "/filter", component: Filters},
-
-    { path: "/maps", component: Maps},
 
     { path: "/scheduler", component: Scheduler},
 

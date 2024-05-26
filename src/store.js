@@ -12,6 +12,7 @@ export default createStore({
     accesspoints: [],
     clients: [],
     capture: { accesspoints: [], clients: [] },
+    system: {},
   },
   mutations: {
     setTarget(state, payload) {
@@ -34,8 +35,21 @@ export default createStore({
     setInterfaces(state, interfaces) {
       state.interfaces = interfaces;
     },
+    setSystem(state, system) {
+      state.system = system;
+    },
   },
   actions: {
+    async fetchSystem({ commit }) {
+      try {
+        const response = await axios.get("/api/system");
+        let data = response.data;
+
+        commit("setSystem", data)
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async fetchInterfaces({ commit }) {
       try {
         const response = await axios.get("/api/interfaces");

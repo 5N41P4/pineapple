@@ -13,9 +13,9 @@
                 </thead>
                 <tbody v-if="schedules.length > 0">
                     <tr v-for="schedule in schedules" :key="schedule.id">
-                        <td>{{ schedule.action.identifier }}</td>
+                        <td>{{ schedule.cmd.interface }}</td>
                         <td>{{ schedule.cron }}</td>
-                        <td>{{ schedule.action.action }}</td>
+                        <td>{{ schedule.cmd.action }}</td>
                         <td class="dropdown-cell">
                             <button type="button" class="btn btn-light btn-sm"
                                 @click="toggleDropdown(schedule.id)">...</button>

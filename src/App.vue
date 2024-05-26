@@ -9,25 +9,13 @@ import Cpu from "@/components/SystemCards/Cpu.vue";
     <div>
         <Navigation />
         <main class="container">
-            <div id="dash" class="row">
-                <div class="col-lg-4 d-flex align-items-stretch">
-                    <Disk class="flex-grow-1" />
-                </div>
-                <div class="col-lg-4 d-flex align-items-stretch">
-                    <Cpu class="flex-grow-1" />
-                </div>
-                <div class="col-lg-4 d-flex align-items-stretch">
-                    <Mem class="flex-grow-1" />
-                </div>
-            </div>
-            <hr />
             <router-view></router-view>
         </main>
     </div>
 </template>
 
 <style scoped>
-#dash {
-    padding-top: 5rem;
+main {
+    padding-top: 7rem;
 }
 </style>
