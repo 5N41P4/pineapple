@@ -5,8 +5,8 @@ import axios from "axios";
 export default createStore({
   state: {
     target: {
-      accessPoint: null,
-      client: null,
+      accessPoint: {},
+      client: {},
     },
     interfaces: [],
     accesspoints: [],
